@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to dashboard{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="#">dashboard</a></li>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header">
+                    <h2><a href="{{ path('contacts') }}" class="text-dark">{{ contacts }} {% if contacts > 1 %}Messages{% else %}Message{% endif %}</a></h2>
+                </div>
+                <div class="card-body text-center">Nombre de messages reçus par Gestions ZEN</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2><a href="{{ path('newsletters') }}" class="text-dark">{{ emails }} {% if emails > 1 %}Emails{% else %}Email{% endif %}</a></h2>
+                </div>
+                <div class="card-body text-center">Emails ajoutées à la newsletters</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

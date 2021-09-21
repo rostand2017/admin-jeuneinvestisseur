@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérez votre blog{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>News</h5>
+                    <a href="{{ path('create_news') }}" class="btn btn-sm btn-danger float-right" id="newModal">+ Ajoutez une news</a>
+                    <span class="d-block m-t-5">Ajoutez et editez une news.</span>
+                </div>
+                <div class="card-body table-border-style">
+                    <div class="card-columns">
+                        {% for new in news %}
+                            <div class="card">
+                                <div class="btn-group mb-2 mr-2 float-right">
+                                    <button class="btn btn-outline-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item editModal" href="{{ path('news_details', {news: new.id}) }}">modifier</a>
+                                        <a class="dropdown-item deleteElt" href="#" data-url="{{ path('delete_news', {news: new.id}) }}">supprimer</a>
+                                    </div>
+                                </div>
+                                <a href="{{ path('news_details', {news: new.id}) }}" class="videoLink">
+                                    <img class="img-fluid card-img-top" src="{{ asset('/uploads/blog/images/'~new.image) }}" alt="Card image news">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ new.title }}</h5>
+                                    <a href="{{ path('news_details', {news: new.id}) }}" title="Aperçu" class="btn  btn-primary">Aperçu</a>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Ajouté le {{ new.createdAt | date('d M Y') }}</small>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="text-center"><span><i class="feather icon-trash"></i>Aucune news disponible</span></div>
+                        {% endfor %}
+                    </div>
+                    <div class="navigation">
+                        {{ knp_pagination_render(news) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.deleteElt').on('click', function (e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            swal({
+                    title: "Warning",
+                    text: "Êtes vous sûr de vouloir supprimer cette news ?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Oui",
+                    cancelButtonText: "Annuler",
+                    closeOnConfirm: true
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        $.ajax({
+                            type: 'post',
+                            url : url,
+                            datatype: 'json',
+                            success: function (json) {
+                                if (json.status === 1) {
+                                    window.location.reload();
+                                } else {
+                                    // toastr.error(json.mes,'Oups!');
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){}
+                        });
+                    }
+                });
+        });
+    </script>
+{% endblock %}

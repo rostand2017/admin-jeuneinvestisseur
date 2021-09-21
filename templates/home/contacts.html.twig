@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="#">Contacts</a></li>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Message des utilisateurs</h5>
+                </div>
+                <div class="card-body table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom</th>
+                                <th>Tel</th>
+                                <th>email</th>
+                                <th>Message</th>
+                                <th>Date d'ajout</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for contact in contacts %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ contact.name }}</td>
+                                        <td>{{ contact.tel }}</td>
+                                        <td>{{ contact.email }}</td>
+                                        <td>{{ contact.message }}</td>
+                                        <td>{{ contact.createdat | date('d M Y') }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr><td colspan="4" class="text-center"><i class="feather icon-trash"></i>Aucun message</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}

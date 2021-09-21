@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administrateurs{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="#">Administrateurs</a></li>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Administrateurs de la plateforme</h5>
+                    <span class="d-block m-t-5">Ajoutez un administrateur qui pourra également gérer la platforme.</span>
+                </div>
+                <div class="card-body table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Email</th>
+                                <th>Date d'ajout</th>
+                                <th class="text-right"><a href="#editModal" data-toggle="modal" class="btn btn-sm btn-danger" id="newModal">+ Ajouter</a></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for admin in admins %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ admin.email }}</td>
+                                        <td>{{ admin.createdAt | date('d M Y') }}</td>
+                                        <td class="text-right">
+                                            <div class="btn-group mb-2 mr-2">
+                                                <button class="btn btn-outline-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">action</button>
+                                                {% if admin.email != app.user.email %}
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item editModal" href="#editModal" data-toggle="modal" data-email="{{ admin.email }}" data-id="{{ admin.id }}">modifier</a>
+                                                        <a class="dropdown-item deleteElt" href="#" data-url="{{ path('delete_admin', {admin: admin.id}) }}">supprimer</a>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr><td colspan="4" class="text-center"><i class="feather icon-trash"></i>Aucun administrateur disponible</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Administrateur</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <form method="post" action="{{ path('edit_admin') }}" id="form">
+                    <div id="alert" class="text-center"></div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" name="id" id="id">
+                            <input type="email" name="email" required class="form-control" id="email" placeholder="Entrez l'adresse email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Entrez le mot de passe">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary" id="sendBtn">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/admin.js"></script>
+{% endblock %}

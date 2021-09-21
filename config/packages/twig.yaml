@@ -1,0 +1,5 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        images_directory: 'http://127.0.0.1:8000/uploads/images/'
+        cautions_directory: 'http://127.0.0.1:8000/uploads/cautions_files/'

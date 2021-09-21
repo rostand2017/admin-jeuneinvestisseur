@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Newsletters{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="#">Emails</a></li>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Emails ayant souscrit</h5>
+                    <span class="d-block m-t-5">Diffusez ici un message à tous les emails</span>
+                </div>
+                <div class="card-body table-border-style">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>email</th>
+                                <th>Date d'ajout</th>
+                                <th class="text-right"><a href="{{ path('diffusion') }}" data-toggle="moda" class="btn btn-sm btn-danger" id="newModa"><i class="fa fa-mail-bulk"></i> Faire une diffusion</a></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for newsletter in newsletters %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ newsletter.email }}</td>
+                                        <td>{{ newsletter.createdAt | date('d M Y') }}</td>
+                                        <td></td>
+                                    </tr>
+                                {% else %}
+                                    <tr><td colspan="4" class="text-center"><i class="feather icon-trash"></i>Aucune email disponible</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="editor2"></div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nouvelle diffusion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <form method="post" id="form" action="{{ path('send_messages') }}">
+                    <div id="alert" class="text-center"></div>
+                    <div class="modal-body">
+                        <div class="document-editor">
+                            <div id="toolbar-container"></div>
+                            <div class="content-container">
+                                <div id="editor"></div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <textarea placeholder="Contenu de la section" name="message" id="paragraph" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button class="btn btn-primary m-2" type="submit" id="sendBtn">
+                            <span class="spinner-border spinner-border-sm" role="status" id="loadSendBtn" style="display: none;"></span>
+                            <span class="btn-text" id="textSendBtn">Diffuser</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/plugins/ckeditor5-build-decoupled-document/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/js/newsletters.js') }}"></script>
+{% endblock %}

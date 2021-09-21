@@ -1,0 +1,47 @@
+<nav class="pcoded-navbar menu-light ">
+    <div class="navbar-wrapper  ">
+        <div class="navbar-content scroll-div " >
+
+            <div class="">
+                <div class="main-menu-header">
+                    <img class="img-radius" src="{{ asset('assets/images/user/avatar-2.jpg') }}" alt="User-Profile-Image">
+                    <div class="user-details">
+                        <div id="more-details">{{ app.user.email }}<i class="fa fa-caret-down"></i></div>
+                    </div>
+                </div>
+                <div class="collapse" id="nav-user-link">
+                    <ul class="list-unstyled">
+                        <li class="list-group-item"><a href="{{ path('reset_password') }}"><i class="feather icon-user m-r-5"></i>Mot de passe</a></li>
+                        <li class="list-group-item"><a href="{{ path('app_logout') }}"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <ul class="nav pcoded-inner-navbar ">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Navigation</label>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('home_page') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-monitor"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ path('blog') }}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-tag"></i></span><span class="pcoded-mtext">Blog</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('categories') }}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-package"></i></span><span class="pcoded-mtext">Catégories</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('newsletters') }}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-mail"></i></span><span class="pcoded-mtext">Newsletters</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('contacts') }}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-message-circle"></i></span><span class="pcoded-mtext">Messages</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('admins') }}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Admins</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->

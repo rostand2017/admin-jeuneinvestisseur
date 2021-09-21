@@ -1,0 +1,324 @@
+<html>
+    <head>
+        <title>Editez et envoyez</title>
+        <link rel="icon" href="{{ asset('assets/images/logo.png') }}" type="image/png">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('grape/style/material.css') }}">
+            <link rel="stylesheet" href="{{ asset('grape/style/tooltip.css') }}">
+
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+{#
+            <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+#}
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.17.25/grapes.min.js" integrity="sha512-VqAHCp8/o3IBiODG38R1fbf8N/9kmaByxNwkIlB8Ub6FOT22q/QMJs28lCkR/bw1U9JTULTO70P/BBHUWGqalQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.17.25/css/grapes.min.css" integrity="sha512-w3D0C1x5yaU+XGNmJtLLdUoIFodaLBKxFfRIeJCEy06hSQeODmPBUywMMwCoh5mIUa7XMKYA2cEBxyU7DoIHXQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdn.jsdelivr.net/npm/grapesjs-blocks-bootstrap4@0.2.3/dist/grapesjs-blocks-bootstrap4.min.js"></script>
+            {#
+            <script src="{{ asset('grape/dist/grapesjs-blocks-bootstrap4.min.js') }}"></script>
+            <script src="https://unpkg.com/grapesjs"></script>
+            <script src="{{ asset('grape/dist/grapesjs-blocks-bootstrap4.min.js') }}"></script>
+#}
+        {% endblock %}
+    </head>
+    <body style="margin: 0; background: #444">
+
+        {% block body %}
+
+
+            {% if news.id is null %}
+                    <div id="gjs" class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <img class="card-img-top" src="https://www.theportugalnews.com/uploads/news/Zen.jpg" alt="Gestions ZEN"/>
+                                    <div class="card-body">
+                                        <h2 class="card-title">Bonjour comment vous allez ?</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad architecto, commodi ea eaque error est et facere facilis harum labore laudantium, magni molestiae nam neque optio quod ratione sapiente sit!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <style>
+                            body {
+                                background-color: #f4ebf3;
+                            }
+                            header {
+                                margin-top: 4rem;
+                            }
+                            h1, h2, h3, h4, h5, h6,
+                            .h1, .h2, .h3, .h4, .h5, .h6 {
+                                color: #9f5497;
+                            }
+                            .jumbotron {
+                                background-color: #d0bace;
+                            }
+                        </style>
+                    </div>
+                {% else %}
+                    <div id="gjs" style="height:0px; overflow:hidden">{{ news.content | raw }}</div>
+                {% endif %}
+
+
+            <div class="container">
+                <div class="row justify-content-start">
+                    <div class="col-md-7">
+                        <form id="test-form" class="test-form" action="{{ path('edit_news') }}" method="POST" enctype="multipart/form-data">
+                            <br>
+                            <div id="alert" class="text-center"></div>
+                            <br>
+
+                            <div class="form-group">
+                                <input class="form-control" type="text" id="title" name="title" placeholder="Titre de la news" value="{{ news.title }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control" name="metaDescription" id="metaDescription" placeholder="Petite description SEO de l'article (255 max)" cols="30" rows="5">{% if news.id is null %}{% else %}{{ news.metadescription }}{% endif %}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <select class="form-control" name="category" id="" required>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.title }}</option>
+                                    {% else %}
+                                        <option value="">Aucune catégorie - enregistrez une</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image" class="text-light">Ajoutez une photo pour la news</label>
+                                <input type="file" name="image" id="image">
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="id"  value="{{ news.id }}">
+                                <input type="hidden" name="content" id="content">
+                                <button class="btn btn-dark btn-block" id="sendBtn" style="width: 100%">{% if news.id is null %}AJOUTER{% else %}MODIFIER{% endif %}</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-5 mt-4 p-4 bg-light">
+                        <h3 class="mt-4 mb-3">Aperçu google <i class="fa fa-google"></i></h3>
+                        <div class="google-card">
+                            <div class="google-link"><small>www.jeune-investisseur.com/2/<span class="google-title">{% if news.id is null %}la-cryptomonaie{% else %}{{ news.title }}{% endif %}</span></small></div>
+                            <h4 class="google-title" style="color: #1a0dab;">{% if news.id is null %}La cryptomonaie{% else %}{{ news.title }}{% endif %}</h4>
+                            <div class="google-description" style="color: #5f6368;">
+                                {% if news.id is null %}
+                                Une cryptomonnaie est une devise numérique décentralisée, qui utilise des algorithmes cryptographiques et un protocole nommé blockchain pour assurer la fiabilité et la traçabilité des transactions.
+                                {% else %}
+                                    {{ news.metadescription }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="info-cont" style="display:none">
+                <br/>
+                <svg class="grapesjs-logo" xmlns="http://www.w3.org/2000/svg" version="1"><g id="gjs-logo"><path d="M40 5l-12.9 7.4 -12.9 7.4c-1.4 0.8-2.7 2.3-3.7 3.9 -0.9 1.6-1.5 3.5-1.5 5.1v14.9 14.9c0 1.7 0.6 3.5 1.5 5.1 0.9 1.6 2.2 3.1 3.7 3.9l12.9 7.4 12.9 7.4c1.4 0.8 3.3 1.2 5.2 1.2 1.9 0 3.8-0.4 5.2-1.2l12.9-7.4 12.9-7.4c1.4-0.8 2.7-2.2 3.7-3.9 0.9-1.6 1.5-3.5 1.5-5.1v-14.9 -12.7c0-4.6-3.8-6-6.8-4.2l-28 16.2" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:10;stroke:#fff"/></g></svg>
+                <br/>
+                <div class="gjs-import-label">
+                    <b>GrapesJS Newsletter Builder</b> is a showcase of what/how is possible to build an editor using the
+                    <a class="info-link gjs-color-active" target="_blank" href="http://artf.github.io/grapesjs/">GrapesJS</a>
+                    core library. Is not intended to represent a complete builder solution.
+                    <br/><br/>
+                    For any tip about this demo (or newsletters construction in general) check the
+                    <a class="info-link gjs-color-active" target="_blank" href="https://github.com/artf/grapesjs-preset-newsletter">Newsletter Preset repository</a>
+                    and open an issue. For any problem with the builder itself, open an issue on the main
+                    <a class="info-link gjs-color-active" target="_blank" href="https://github.com/artf/grapesjs">GrapesJS repository</a>.
+                    <br/><br/>
+                    Being a free and open source project contributors and supporters are extremely welcome.
+                </div>
+            </div>
+
+        {% endblock %}
+
+
+        {% block javascripts %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+            <script>
+                $(function () {
+                    var host = 'http://artf.github.io/grapesjs/';
+                    var images = [
+                        "{{ asset('assets/images/logo.png') }}",
+                        "https://www.theportugalnews.com/uploads/news/Zen.jpg",
+                        "https://images-na.ssl-images-amazon.com/images/I/81%2B8pLuHPuL.png",
+                        "https://menage-jardinage.fr/wp-content/uploads/2018/09/Zen-Yoga-1.jpg",
+                        "https://images.unsplash.com/photo-1532009877282-3340270e0529?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8emVufGVufDB8fDB8&ixlib=rb-1.2.1&w=1000&q=80",
+                        "https://kid101.com/wp-content/uploads/2018/07/Zen-Nights-Block-Party.jpg",
+                        "https://www.nexthink.com/wp-content/uploads/2020/06/Partner-illustration@2x.png",
+                        "https://cdn.lynda.com/course/612174/612174-637286221687605579-16x9.jpg",
+                    ];
+
+                    // Set up GrapesJS editor with the Newsletter plugin
+                    //grapesjs.init();
+                    var editor = grapesjs.init({
+                        height: '100%',
+                        //noticeOnUnload: 0,
+                        storageManager:{
+                            autoload: 0,
+                        },
+                        assetManager: {
+                            assets: images,
+                            upload: 0,
+                            uploadText: 'Uploading is not available in this demo',
+                        },
+                        container : '#gjs',
+                        fromElement: true,
+                        showDevices: false,
+                        plugins: ['grapesjs-blocks-bootstrap4'],
+                        pluginsOpts: {
+                            'grapesjs-blocks-bootstrap4': {
+                                blocks: {},
+                                blockCategories: {},
+                                labels: {},
+                                gridDevicesPanel: true,
+                                formPredefinedActions: [
+                                    {name: 'Contact', value: '/contact'},
+                                    {name: 'landing', value: '/landing'},
+                                ]
+                            },
+
+                        },
+                        canvas: {
+                            styles: [
+                                'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
+                            ],
+                            scripts: [
+                                'https://code.jquery.com/jquery-3.3.1.slim.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
+                                'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'
+                            ]
+                        }
+                    });
+
+                    window.editor = editor;
+
+
+                    // Let's add in this demo the possibility to test our newsletters
+                    /*var mdlClass = 'gjs-mdl-dialog-sm';
+                    var pnm = editor.Panels;
+                    var cmdm = editor.Commands;
+                    var testContainer = document.getElementById("test-form");
+                    var contentEl = testContainer.querySelector('input[name=content]');
+                    var md = editor.Modal;
+                    cmdm.add('send-test', {
+                        run(editor, sender) {
+                            sender.set('active', 0);
+                            var modalContent = md.getContentEl();
+                            var mdlDialog = document.querySelector('.gjs-mdl-dialog');
+                           // var cmdGetCode = cmdm.get('gjs-get-inlined-html');
+                            //contentEl.value = cmdGetCode && cmdGetCode.run(editor);
+                            contentEl.value =  editor.getHtml();
+                            mdlDialog.className += ' ' + mdlClass;
+                            testContainer.style.display = 'block';
+                            md.setTitle('Editez votre news');
+                            md.setContent('');
+                            md.setContent(testContainer);
+                            md.open();
+                            md.getModel().once('change:open', function() {
+                                mdlDialog.className = mdlDialog.className.replace(mdlClass, '');
+                                //clean status
+                            })
+                        }
+                    });
+                    pnm.addButton('options', {
+                        id: 'send-test',
+                        className: 'fa fa-save',
+                        command: 'send-test',
+                        attributes: {
+                            'title': 'Enregistrer',
+                            'data-tooltip-pos': 'bottom',
+                            'data-toggle': 'modal',
+                            'data-target': '#editModal',
+                        },
+                    });
+
+                    */
+                    //fa fa-refresh
+                    var statusFormElC = document.querySelector('.form-status');
+                    var statusFormEl = document.querySelector('.form-status i');
+
+
+                    // Simple warn notifier
+                    var origWarn = console.warn;
+                    toastr.options = {
+                        closeButton: true,
+                        preventDuplicates: true,
+                        showDuration: 250,
+                        hideDuration: 150
+                    };
+                    console.warn = function (msg) {
+                        toastr.warning(msg);
+                        origWarn(msg);
+                    };
+                });
+
+                $(document).ready(function () {
+
+                    // Beautify tooltips
+                    $('*[title]').each(function () {
+                        var el = $(this);
+                        var title = el.attr('title').trim();
+                        if(!title)
+                            return;
+                        el.attr('data-tooltip', el.attr('title'));
+                        el.attr('title', '');
+                    });
+
+                });
+            </script>
+
+            <script>
+                $(document).ready(function () {
+                    $('#test-form').on('submit',function (e) {
+                        e.preventDefault();
+
+                        $('#content').val(editor.getHtml());
+                        var formdata = (window.FormData) ? new FormData($(this)[0]) : null;
+                        var data = (formdata !== null) ? formdata : $(this).serialize();
+                        $.ajax({
+                            type: 'post',
+                            url: $("#test-form").attr('action'),
+                            data: data,
+                            datatype: 'json',
+                            processData: false,
+                            contentType: false,
+                            beforeSend: function () {
+                                $('#sendBtn').prop('disabled',true);
+                                $('#sendBtn').text('Enregistrement...');
+                                $('#alert').get(0).innerHTML = "";
+                            },
+                            success: function (json) {
+                                if (json.status === 1){
+                                    $('#alert').append(
+                                        "<span class='alert alert-success'>"+ json.mes +"</span>"
+                                    );
+                                }else{
+                                    $('#alert').append(
+                                        "<span class='alert alert-danger'>"+ json.mes +"</span>"
+                                    );
+                                }
+                            },
+                            complete: function () {
+                                $('#sendBtn').prop('disabled',false);
+                                $('#sendBtn').text({% if news.id is null %}'AJOUTER'{% else %}'MODIFIER'{% endif %});
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){}
+                        });
+                    });
+                    $("#metaDescription").on('keyup', function (e) {
+                        $('.google-description').text($(this).val());
+                    });
+                    $("#title").on('keyup', function (e) {
+                        $('.google-title').text($(this).val().replaceAll(" ", "-").toLowerCase());
+                    })
+                });
+            </script>
+        {% endblock %}
+    </body>
+</html>
