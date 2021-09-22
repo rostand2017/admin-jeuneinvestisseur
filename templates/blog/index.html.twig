@@ -31,6 +31,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">Ajouté le {{ new.createdAt | date('d M Y') }}</small>
+                                    <span class="float-right">{% if new.views is not null %}{{ new.views }} vue{% if new.views > 1 %}s{% endif %}{% else %}0 vue{% endif %}</span>
                                 </div>
                             </div>
                         {% else %}

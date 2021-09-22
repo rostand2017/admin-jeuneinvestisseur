@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\News;
+use App\Entity\Viewers;
 use App\Tools\Thumbnails;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -145,5 +146,55 @@ class BlogController extends AbstractController
 
     private function getUniqueFileName(){
         return md5(uniqid());
+    }
+
+    /**
+     * @Route("/blog/stats/{news}", name="edit_news")
+     */
+    public function statsNews(News $news, Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        $viewersRep = $em->getRepository(Viewers::class);
+        $viewersCountries = $viewersRep->getViewersCountries();
+        $viewers = [];
+        foreach($viewersCountries as $country){
+            $statNews = $viewersRep->getDurationAndPercentage($country);
+            $views = count($viewersRep->findBy(['country'=>$country]));
+            array_push($viewers, ["country" => $country, "views" => $views, "readpercentage" => $statNews['readpercentage'], "duration" => $statNews['duration']] );
+        }
+
+        $years = $viewersRep->getYears();
+        $months = ['Janvier', "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"];
+
+        $month = $request->query->get('month');
+        $year = $request->query->get('year');
+        if($month != null and $year != null){
+            $monthViewers = $viewersRep->getMonthViewers($month, $year);
+        }else{
+            $monthViewers = $viewersRep->getMonthViewers(null, null);
+        }
+        $monthViewers = $this->getDayWithViewers($monthViewers);
+        return $this->render("blog/stats.html.twig", compact("news", "viewers", "months", "years", "monthViewers"));
+    }
+
+    private function getDayWithViewers($monthViewers){
+        $dayWithViews = [];
+        $counter = 0;
+        $currentDay = $monthViewers[0]['dayy'];
+        $index = 0;
+        $tableSize = count($monthViewers);
+        foreach ($monthViewers as $viewer){
+            $index ++;
+            if($viewer['dayy'] == $currentDay){
+                $counter ++;
+                if($index == $tableSize)
+                    array_push($dayWithViews, ['day'=>$currentDay, 'viewers'=>$counter]);
+            }else{
+                array_push($dayWithViews, ['day'=>$currentDay, 'viewers'=>$counter]);
+                $currentDay = $viewer['dayy'];
+                $counter = 1;
+            }
+        }
+        return $dayWithViews;
     }
 }

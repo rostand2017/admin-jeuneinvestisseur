@@ -29,6 +29,34 @@ class Viewers
     private $viewerkey;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=254, nullable=true)
+     */
+    private $ip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=254, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="duration", type="integer", nullable=true)
+     */
+    private $duration;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="readpercentage", type="integer", nullable=true)
+     */
+    private $readPercentage;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="createdat", type="datetime", nullable=true)
@@ -91,5 +119,68 @@ class Viewers
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getIp(): string
+    {
+        return $this->ip;
+    }
+
+    /**
+     * @param string $ip
+     */
+    public function setIp(string $ip): void
+    {
+        $this->ip = $ip;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string $country
+     */
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDuration(): int
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param int $duration
+     */
+    public function setDuration(int $duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReadPercentage(): int
+    {
+        return $this->readPercentage;
+    }
+
+    /**
+     * @param int $readPercentage
+     */
+    public function setReadPercentage(int $readPercentage): void
+    {
+        $this->readPercentage = $readPercentage;
+    }
 
 }

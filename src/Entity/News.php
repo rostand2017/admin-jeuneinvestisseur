@@ -64,6 +64,22 @@ class News
      */
     private $image;
 
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="durationtotal", type="integer", nullable=true)
+     */
+    private $durationTotal;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="readduration", type="integer", nullable=true)
+     */
+    private $readDuration;
+
     /**
      * @var \DateTime
      *
@@ -106,6 +122,7 @@ class News
         $this->updatedat = new \DateTime();
         $this->categories = new ArrayCollection();
         $this->isDeleted = false;
+        $this->views = 0;
     }
 
     public function getCategories(){
@@ -247,6 +264,38 @@ class News
     public function setViews(int $views): void
     {
         $this->views = $views;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDurationTotal(): int
+    {
+        return $this->durationTotal;
+    }
+
+    /**
+     * @param int $durationTotal
+     */
+    public function setDurationTotal(int $durationTotal): void
+    {
+        $this->durationTotal = $durationTotal;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReadDuration(): int
+    {
+        return $this->readDuration;
+    }
+
+    /**
+     * @param int $readDuration
+     */
+    public function setReadDuration(int $readDuration): void
+    {
+        $this->readDuration = $readDuration;
     }
 
 }
