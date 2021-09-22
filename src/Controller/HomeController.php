@@ -6,6 +6,7 @@ use App\Entity\Admin;
 use App\Entity\Contacts;
 use App\Entity\Emails;
 use App\Entity\User;
+use App\Entity\Visitor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,12 +22,14 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $contacts = $this->getDoctrine()->getRepository(Contacts::class)->findAll();
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $emails = $this->getDoctrine()->getRepository(Emails::class)->findAll();
+        $monthVisitors = $this->getDoctrine()->getRepository(Visitor::class)->getMonthVisitors();
+        $yearVisitors = $this->getDoctrine()->getRepository(Visitor::class)->getYearVisitors();
         return $this->render('home/index.html.twig', [
             'contacts' => count($contacts),
-            'users' => count($users),
             'emails' => count($emails),
+            'yearVisitors' => $yearVisitors,
+            'monthVisitors' => $monthVisitors
         ]);
     }
 

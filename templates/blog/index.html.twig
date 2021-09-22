@@ -18,6 +18,7 @@
                                 <div class="btn-group mb-2 mr-2 float-right">
                                     <button class="btn btn-outline-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                     <div class="dropdown-menu">
+                                        <a class="dropdown-item stats" href="{{ path('stats_news', {news: new.id}) }}"><i class="fa fa-tag"></i> stats</a>
                                         <a class="dropdown-item editModal" href="{{ path('news_details', {news: new.id}) }}">modifier</a>
                                         <a class="dropdown-item deleteElt" href="#" data-url="{{ path('delete_news', {news: new.id}) }}">supprimer</a>
                                     </div>

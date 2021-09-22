@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Viewers
  *
- * @ORM\Table(name="viewers", indexes={@ORM\Index(name="fk_association1", columns={"news"})})
- * @ORM\Entity(repositoryClass="App\Repository\ViewersRepository")
+ * @ORM\Table(name="visitor")
+ * @ORM\Entity(repositoryClass="App\Repository\VisitorRepository")
  */
-class Viewers
+class Visitor
 {
     /**
      * @var int
@@ -42,19 +42,6 @@ class Viewers
      */
     private $country;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="duration", type="integer", nullable=true)
-     */
-    private $duration;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="readpercentage", type="integer", nullable=true)
-     */
-    private $readPercentage;
 
     /**
      * @var \DateTime|null
@@ -63,15 +50,6 @@ class Viewers
      */
     private $createdat;
 
-    /**
-     * @var News
-     *
-     * @ORM\ManyToOne(targetEntity="News")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="news", referencedColumnName="id")
-     * })
-     */
-    private $news;
 
     public function __construct()
     {
@@ -107,18 +85,6 @@ class Viewers
         return $this;
     }
 
-    public function getNews(): ?News
-    {
-        return $this->news;
-    }
-
-    public function setNews(?News $news): self
-    {
-        $this->news = $news;
-
-        return $this;
-    }
-
     /**
      * @return string
      */
@@ -149,38 +115,6 @@ class Viewers
     public function setCountry(string $country): void
     {
         $this->country = $country;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDuration(): int
-    {
-        return $this->duration;
-    }
-
-    /**
-     * @param int $duration
-     */
-    public function setDuration(int $duration): void
-    {
-        $this->duration = $duration;
-    }
-
-    /**
-     * @return int
-     */
-    public function getReadPercentage(): int
-    {
-        return $this->readPercentage;
-    }
-
-    /**
-     * @param int $readPercentage
-     */
-    public function setReadPercentage(int $readPercentage): void
-    {
-        $this->readPercentage = $readPercentage;
     }
 
 }

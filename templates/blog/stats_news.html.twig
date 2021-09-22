@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stats {{ news.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('blog') }}">Blogs</a></li>
+    <li class="breadcrumb-item"><a href="#">stats</a></li>
+{% endblock %}
+{% block body %}
+    <div class="col-md-12">
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center"><span class="text-warning"><i class="fa fa-eye"></i><br> {{ news.views }} Vue{% if news.views > 1 %}s{% endif %}</span></h4>
+                    <div class="text-center">Nombre de vues total de cet article</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center"><span class="text-danger">{{ news.durationtotal }}</span></h4>
+                    <div class="text-center"><b> minutes de lecture</b></div>
+                    <div class="text-center"><span class="">Lecture moyenne: {{ readMinuteAvg | round }} minutes</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center"><span class="text-warning">{{ readPercentage | round }} %</span></h4>
+                    <div class="text-center">Pourcentage moyen de lecture</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-4">
+        <h4 class="text-center mt-4">Lecture par pays</h4>
+        <div class="card">
+            <table class="table table-hover table-responsive-sm text-cente">
+                {% for viewer in viewers %}
+                    <tr>
+                        <td><b><i class="fa fa-globe"></i>  {{ viewer.country }}</b></td>
+                        <td>{{ viewer.views }} vue{% if viewer.views > 1 %}s{% endif %}</td>
+                        <td>Lecture moyenne: <span class="text-warning"><b>{{ viewer.readpercentage | round }}%</b></span></td>
+                        <td>Lecture moyenne: <span class="text-danger"><b>{{ viewer.duration | round }} minutes</b></span></td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4" class="text-center">Aucune donnée</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-4">
+        <h4 class="text-center mt-4">Vues par mois</h4>
+        <div>
+            <form action="">
+                <div class="form-group">
+                    <select class="form-control" name="month" id="month">
+                        {% for month in months %}
+                            <option value="{{ loop.index }}" {% if app.request.get('month') == loop.index %}selected{% endif %}>{{ month }}</option>
+                        {% else %}
+                            <option value="">...</option>
+                        {% endfor %}
+                    </select>
+                    <select class="form-control" name="year" id="year">
+                        {% for year in years %}
+                            <option value="{{ year['yearr'] }}" {% if app.request.get('year') == year['yearr'] %}selected{% endif %}>{{ year['yearr'] }}</option>
+                        {% else %}
+                            <option value="">...</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" id="submitBtn" style="display: none;">Appliquer</button>
+            </form>
+        </div>
+        <div class="graph">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(function () {
+           $('#month').on('change', function (e) {
+               $('#submitBtn').click();
+           });
+           $('#year').on('change', function (e) {
+               $('#submitBtn').click();
+           });
+           var labels = [{% for view in monthViewers %}{{ view['day'] }},{% endfor %}];
+            var data = {
+                labels: labels,
+                datasets: [{
+                    label: 'Visites du mois',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [{% for view in monthViewers %}{{ view['viewers'] }},{% endfor %}],
+                }]
+            };
+            var config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+
+        });
+    </script>
+{% endblock %}

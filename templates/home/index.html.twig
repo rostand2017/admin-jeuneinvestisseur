@@ -10,16 +10,24 @@
         <div class="card-deck">
             <div class="card">
                 <div class="card-header">
-                    <h2><a href="{{ path('contacts') }}" class="text-dark">{{ contacts }} {% if contacts > 1 %}Messages{% else %}Message{% endif %}</a></h2>
+                    <h4 class="text-center"><a href="{{ path('contacts') }}" class="text-dark">{{ contacts }} {% if contacts > 1 %}Messages{% else %}Message{% endif %}</a></h4>
                 </div>
                 <div class="card-body text-center">Nombre de messages reçus par Gestions ZEN</div>
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h2><a href="{{ path('newsletters') }}" class="text-dark">{{ emails }} {% if emails > 1 %}Emails{% else %}Email{% endif %}</a></h2>
+                    <h4 class="text-center"><a href="{{ path('newsletters') }}" class="text-dark">{{ emails }} {% if emails > 1 %}Emails{% else %}Email{% endif %}</a></h4>
                 </div>
                 <div class="card-body text-center">Emails ajoutées à la newsletters</div>
             </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center"><span class="text-dark"><i class="fa fa-arrow-up"></i> {{ monthVisitors }} visiteur{% if monthVisitors > 1 %}s{% endif %} ce mois</span></h4>
+            </div>
+            <div class="card-body text-center"><b class="text-danger">{{ yearVisitors }} visiteur{% if yearVisitors > 1 %}s{% endif %} cette année</b></div>
         </div>
     </div>
 {% endblock %}

@@ -149,51 +149,57 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/blog/stats/{news}", name="edit_news")
+     * @Route("/blog/stats/{news}", name="stats_news")
      */
     public function statsNews(News $news, Request $request){
         $em = $this->getDoctrine()->getManager();
 
         $viewersRep = $em->getRepository(Viewers::class);
-        $viewersCountries = $viewersRep->getViewersCountries();
+        $nbViewers = count($viewersRep->findByNews($news));
+        $readMinuteAvg = $news->getDurationTotal() / $nbViewers;
+        $readPercentage = $readMinuteAvg  * 100 / $news->getReadDuration();
+
+        $viewersCountries = $viewersRep->getViewersCountries($news->getId());
         $viewers = [];
         foreach($viewersCountries as $country){
-            $statNews = $viewersRep->getDurationAndPercentage($country);
+            $statNews = $viewersRep->getDurationAndPercentage($news->getId(), $country['country']);
             $views = count($viewersRep->findBy(['country'=>$country]));
-            array_push($viewers, ["country" => $country, "views" => $views, "readpercentage" => $statNews['readpercentage'], "duration" => $statNews['duration']] );
+            array_push($viewers, ["country" => $country['country'], "views" => $views, "readpercentage" => $statNews['readpercentage'], "duration" => $statNews['duration']] );
         }
 
-        $years = $viewersRep->getYears();
+        $years = $viewersRep->getYears($news->getId());
         $months = ['Janvier', "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"];
 
         $month = $request->query->get('month');
         $year = $request->query->get('year');
         if($month != null and $year != null){
-            $monthViewers = $viewersRep->getMonthViewers($month, $year);
+            $monthViewers = $viewersRep->getMonthViewers($news->getId(), $month, $year);
         }else{
-            $monthViewers = $viewersRep->getMonthViewers(null, null);
+            $monthViewers = $viewersRep->getMonthViewers($news->getId(), null, null);
         }
         $monthViewers = $this->getDayWithViewers($monthViewers);
-        return $this->render("blog/stats.html.twig", compact("news", "viewers", "months", "years", "monthViewers"));
+        return $this->render("blog/stats_news.html.twig", compact("news", "viewers", "months", "years", "monthViewers", "readMinuteAvg", "readPercentage"));
     }
 
     private function getDayWithViewers($monthViewers){
         $dayWithViews = [];
+        $tableSize = count($monthViewers);
+        if($tableSize == 0)
+            return $monthViewers;
         $counter = 0;
         $currentDay = $monthViewers[0]['dayy'];
         $index = 0;
-        $tableSize = count($monthViewers);
         foreach ($monthViewers as $viewer){
-            $index ++;
             if($viewer['dayy'] == $currentDay){
                 $counter ++;
-                if($index == $tableSize)
-                    array_push($dayWithViews, ['day'=>$currentDay, 'viewers'=>$counter]);
             }else{
                 array_push($dayWithViews, ['day'=>$currentDay, 'viewers'=>$counter]);
                 $currentDay = $viewer['dayy'];
                 $counter = 1;
             }
+            if($index == $tableSize-1)
+                array_push($dayWithViews, ['day'=>$currentDay, 'viewers'=>$counter]);
+            $index ++;
         }
         return $dayWithViews;
     }
