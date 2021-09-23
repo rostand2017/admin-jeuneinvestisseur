@@ -30,4 +30,39 @@
             <div class="card-body text-center"><b class="text-danger">{{ yearVisitors }} visiteur{% if yearVisitors > 1 %}s{% endif %} cette année</b></div>
         </div>
     </div>
+
+    <div class="col-md-12 mt-4">
+        <h4 class="text-center mt-4">Visites de ce mois</h4>
+        <div class="graph">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(function () {
+            var labels = [{% for view in monthViewers %}{{ view['day'] }},{% endfor %}];
+            var data = {
+                labels: labels,
+                datasets: [{
+                    label: 'Visiteurs du mois',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [{% for view in monthViewers %}{{ view['viewers'] }},{% endfor %}],
+                }]
+            };
+            var config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+
+        });
+    </script>
 {% endblock %}

@@ -21,15 +21,22 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        $visitorRep = $this->getDoctrine()->getRepository(Visitor::class);
         $contacts = $this->getDoctrine()->getRepository(Contacts::class)->findAll();
         $emails = $this->getDoctrine()->getRepository(Emails::class)->findAll();
-        $monthVisitors = $this->getDoctrine()->getRepository(Visitor::class)->getMonthVisitors();
+        $monthVisitors = $visitorRep->getMonthVisitors();
         $yearVisitors = $this->getDoctrine()->getRepository(Visitor::class)->getYearVisitors();
+
+
+        $monthViewers = $visitorRep->getMonthViewers();
+        $monthViewers = BlogController::getDayWithViewers($monthViewers);
+
         return $this->render('home/index.html.twig', [
             'contacts' => count($contacts),
             'emails' => count($emails),
             'yearVisitors' => $yearVisitors,
-            'monthVisitors' => $monthVisitors
+            'monthVisitors' => $monthVisitors,
+            'monthViewers' => $monthViewers,
         ]);
     }
 

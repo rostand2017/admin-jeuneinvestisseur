@@ -38,4 +38,12 @@ class VisitorRepository extends ServiceEntityRepository
         return $result->fetchOne();
     }
 
+    public function getMonthViewers()
+    {
+        $connection = $this->_em->getConnection();
+        $sql = "SELECT *, DAY(createdat) dayy FROM visitor WHERE MONTH(createdat) = MONTH(NOW()) AND YEAR(createdat) = YEAR(NOW()) ORDER BY DAY(createdat)";
+        $statement = $connection->prepare($sql);
+        $result = $statement->executeQuery();
+        return $result->fetchAllAssociative();
+    }
 }

@@ -181,7 +181,7 @@ class BlogController extends AbstractController
         return $this->render("blog/stats_news.html.twig", compact("news", "viewers", "months", "years", "monthViewers", "readMinuteAvg", "readPercentage"));
     }
 
-    private function getDayWithViewers($monthViewers){
+    public static function getDayWithViewers($monthViewers){
         $dayWithViews = [];
         $tableSize = count($monthViewers);
         if($tableSize == 0)
