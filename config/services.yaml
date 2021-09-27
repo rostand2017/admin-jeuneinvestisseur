@@ -6,6 +6,8 @@
 parameters:
     locale: fr
     images_blog_directory: '%kernel.project_dir%/public/uploads/blog/images/'
+    images_directory: '%kernel.project_dir%/public/uploads/images/'
+    images2_directory: 'uploads/images/'
     thumbnails_blog_directory: '%kernel.project_dir%/public/uploads/blog/thumbnails/'
 
 services:

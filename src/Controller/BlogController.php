@@ -75,8 +75,11 @@ class BlogController extends AbstractController
         $id = $request->request->get('id');
         $title = $request->request->get('title');
         $metaDescription = $request->request->get('metaDescription');
+        $metaTitle = $request->request->get('metaTitle');
         $content = $request->request->get('content');
         $category = $request->request->get('category');
+        $tags = $request->request->get('tags');
+        $readDuration = $request->request->get('readDuration');
         $image = $request->files->get("image");
 
         $isEditing = ($id || $id > 0);
@@ -102,6 +105,9 @@ class BlogController extends AbstractController
 
         $news = !$isEditing ? new News() : $em->getRepository(News::class)->find($id);
         $news->setTitle($title);
+        $news->setMetaTitle($metaTitle);
+        $news->setReadDuration($readDuration);
+        $news->setTags($tags);
         $news->setContent($content);
         $news->setMetaDescription($metaDescription);
         $news->setCategory($category);
@@ -157,7 +163,7 @@ class BlogController extends AbstractController
         $viewersRep = $em->getRepository(Viewers::class);
         $nbViewers = count($viewersRep->findByNews($news));
         $readMinuteAvg = $news->getDurationTotal() / $nbViewers;
-        $readPercentage = $readMinuteAvg  * 100 / $news->getReadDuration();
+        $readPercentage = $news->getReadDuration() > 0 ?$readMinuteAvg  * 100 / $news->getReadDuration() : 100;
 
         $viewersCountries = $viewersRep->getViewersCountries($news->getId());
         $viewers = [];

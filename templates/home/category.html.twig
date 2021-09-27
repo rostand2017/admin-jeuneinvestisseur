@@ -27,14 +27,14 @@
                             <tbody>
                                 {% for category in categories %}
                                     <tr>
-                                        <td>{{ loop.index }}</td>
+                                        <td><img src="http://{{ category.image }}" width="70" alt="x"></td>
                                         <td>{{ category.title }}</td>
                                         <td>{{ category.createdAt | date('d M Y') }}</td>
                                         <td class="text-right">
                                             <div class="btn-group mb-2 mr-2">
                                                 <button class="btn btn-outline-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">action</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item editModal" href="#editModal" data-toggle="modal" data-category="{{ category.title }}" data-id="{{ category.id }}">modifier</a>
+                                                    <a class="dropdown-item editModal" href="#editModal" data-toggle="modal" data-description="{{ category.description }}" data-category="{{ category.title }}" data-id="{{ category.id }}">modifier</a>
                                                     <a class="dropdown-item deleteElt" href="#" data-url="{{ path('delete_category', {category: category.id}) }}">supprimer</a>
                                                 </div>
                                             </div>
@@ -64,7 +64,13 @@
                             <input type="hidden" name="id" id="id">
                             <input type="text" name="category" required class="form-control" id="category" placeholder="Catégorie">
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="description" id="description" cols="30" rows="6" placeholder="Description de la catégorie (255 caractères max)"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="image" name="image">
+                        </div>
+                        </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         <button type="submit" class="btn btn-primary" id="sendBtn">Enregistrer</button>

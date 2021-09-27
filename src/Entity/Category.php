@@ -29,6 +29,20 @@ class Category
     private $title;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="description", type="string", length=254, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=254, nullable=false)
+     */
+    private $image;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="createdat", type="datetime", length=254, nullable=false)
@@ -68,6 +82,38 @@ class Category
         $this->createdat = $createdat;
 
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param null|string $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
     }
 
 

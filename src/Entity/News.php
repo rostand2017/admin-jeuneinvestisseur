@@ -39,6 +39,20 @@ class News
     /**
      * @var string
      *
+     * @ORM\Column(name="metatitle", type="string", nullable=true)
+     */
+    private $metaTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tags", type="string", nullable=true)
+     */
+    private $tags;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="metadescription", type="text", nullable=false)
      */
     private $metaDescription;
@@ -123,6 +137,9 @@ class News
         $this->categories = new ArrayCollection();
         $this->isDeleted = false;
         $this->views = 0;
+        $this->tags = "";
+        $this->metaTitle = "";
+        $this->durationTotal = 0;
     }
 
     public function getCategories(){
@@ -296,6 +313,38 @@ class News
     public function setReadDuration(int $readDuration): void
     {
         $this->readDuration = $readDuration;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaTitle(): string
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * @param string $metaTitle
+     */
+    public function setMetaTitle(string $metaTitle): void
+    {
+        $this->metaTitle = $metaTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTags(): string
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param string $tags
+     */
+    public function setTags(string $tags): void
+    {
+        $this->tags = $tags;
     }
 
 }

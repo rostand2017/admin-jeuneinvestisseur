@@ -92,9 +92,15 @@
                                 <label for="image" class="text-light">Ajoutez une photo pour la news</label>
                                 <input type="file" name="image" id="image">
                             </div>
+
+                            <div class="form-group">
+                                <input type="text" value="{% if news.id is not null %}{{ news.tags }}{% endif %}" placeholder="Ajouter des tags (Séparez les par des virgules)" class="form-control" name="tags" id="tags">
+                            </div>
                             <div class="form-group">
                                 <input type="hidden" name="id"  value="{{ news.id }}">
                                 <input type="hidden" name="content" id="content">
+                                <input type="hidden" name="readDuration" id="readDuration">
+                                <input type="hidden" value="{{ news.metatitle }}" name="metaTitle" id="metatitle">
                                 <button class="btn btn-dark btn-block" id="sendBtn" style="width: 100%">{% if news.id is null %}AJOUTER{% else %}MODIFIER{% endif %}</button>
                             </div>
                         </form>
@@ -102,8 +108,8 @@
                     <div class="col-md-5 mt-4 p-4 bg-light">
                         <h3 class="mt-4 mb-3">Aperçu google <i class="fa fa-google"></i></h3>
                         <div class="google-card">
-                            <div class="google-link"><small>www.jeune-investisseur.com/2/<span class="google-title">{% if news.id is null %}la-cryptomonaie{% else %}{{ news.title }}{% endif %}</span></small></div>
-                            <h4 class="google-title" style="color: #1a0dab;">{% if news.id is null %}La cryptomonaie{% else %}{{ news.title }}{% endif %}</h4>
+                            <div class="google-link"><small>www.jeune-investisseur.com/2/<span class="google-title">{% if news.id is null %}la-cryptomonaie{% else %}{{ news.metatitle }}{% endif %}</span></small></div>
+                            <h4 class="google-title" style="color: #1a0dab;">{% if news.id is null %}La cryptomonaie{% else %}{{ news.metatitle }}{% endif %}</h4>
                             <div class="google-description" style="color: #5f6368;">
                                 {% if news.id is null %}
                                 Une cryptomonnaie est une devise numérique décentralisée, qui utilise des algorithmes cryptographiques et un protocole nommé blockchain pour assurer la fiabilité et la traçabilité des transactions.
@@ -282,8 +288,8 @@
                 $(document).ready(function () {
                     $('#test-form').on('submit',function (e) {
                         e.preventDefault();
-
                         $('#content').val(editor.getHtml());
+                        $('#readDuration').val(Math.round(editor.getHtml().split(" ").length/200));
                         var formdata = (window.FormData) ? new FormData($(this)[0]) : null;
                         var data = (formdata !== null) ? formdata : $(this).serialize();
                         $.ajax({
@@ -320,7 +326,9 @@
                         $('.google-description').text($(this).val());
                     });
                     $("#title").on('keyup', function (e) {
-                        $('.google-title').text($(this).val().replaceAll(" ", "-").toLowerCase());
+                        var titleWithTiret = $(this).val().replaceAll(" ", "-").toLowerCase();
+                        $('#metatitle').val(titleWithTiret);
+                        $('.google-title').text(titleWithTiret);
                     })
                 });
             </script>

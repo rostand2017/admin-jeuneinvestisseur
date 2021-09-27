@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,31 +35,49 @@ class CategoryController extends  AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $post = $request->request;
+        $image = $request->files->get("image");
+        $id = $post->get('id');
+
+        if( $id > 0)
+            $category = $em->getRepository(Category::class)->find($id);
+        else
+            $category = new Category();
+        try{
+            if($image != null){
+                $fileName = $this->uploadImage($image, $request);
+                if( $id > 0){
+                    //unlink($category->getImage());
+                }
+                $category->setImage($request->getHttpHost()."/".$this->getParameter("images2_directory").$fileName);
+            }
+        }catch (\Exception $e){
+            return new JsonResponse(['status'=>0, 'mes'=> $e->getMessage()]);
+        }
 
         $title = $post->get("category");
-        $id = $post->get('id');
+        $description = $post->get("description");
         if($id > 0 ){
-            $category = $em->getRepository(Category::class)->find($id);
-            if( $title != '' && $category)
+            if( $title != '' && $category && $description != '')
             {
                 $category->setTitle($title);
+                $category->setDescription($description);
                 $em->persist($category);
                 $em->flush();
                 return new JsonResponse(array(
                     "status"=>0,
-                    "mes"=>"Catégorie modifiée avec succès"
+                    "mes"=>"Champs modifiés avec succès"
                 ));
             }else{
                 return new JsonResponse(array(
                     "status"=>1,
-                    "mes"=>"Renseignez le champs catégorie"
+                    "mes"=>"Renseignez les champs correctement"
                 ));
             }
 
         }else{
-            if($title != ''){
-                $category = new Category();
+            if($title != '' && $description != ''){
                 $category->setTitle($title);
+                $category->setDescription($description);
                 $em->persist($category);
                 $em->flush();
                 return new JsonResponse(array(
@@ -68,7 +87,7 @@ class CategoryController extends  AbstractController
             }else{
                 return new JsonResponse(array(
                     "status"=>1,
-                    "mes"=>"Renseignez le champs catégorie"
+                    "mes"=>"Renseignez les champs correctement"
                 ));
             }
         }
@@ -94,5 +113,26 @@ class CategoryController extends  AbstractController
             ));
         }
     }
+
+
+    /**
+     * @param UploadedFile $file
+     * @throws \Exception
+     */
+    private function uploadImage(UploadedFile $file, Request $request) {
+        $imageAccepted = array("jpg", "png", "jpeg");
+        if( in_array(strtolower($file->guessExtension()), $imageAccepted) ){
+            $fileName = $this->getUniqueFileName().".".$file->guessExtension();
+            $file->move($this->getParameter("images_directory"), $fileName);
+            return $fileName;
+        }else{
+            throw new \Exception("Format d'image incorrect", 100);
+        }
+    }
+
+    private function getUniqueFileName(){
+        return md5(uniqid());
+    }
+
 
 }

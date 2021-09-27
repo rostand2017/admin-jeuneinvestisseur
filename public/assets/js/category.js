@@ -17,6 +17,7 @@ $(document).ready(function() {
             success: function (json) {
                 if (json.status === 0){
                     $('#category').val('');
+                    $('#description').val('');
                     $('#alert').append(
                         "<span class='alert alert-success'>"+ json.mes +"</span>"
                     );
@@ -44,6 +45,7 @@ $(document).ready(function() {
 
     $('.editModal').on('click', function () {
         $('#category').val($(this).data('category'));
+        $('#description').val($(this).data('description'));
         $('#id').val($(this).data('id'));
     });
 
