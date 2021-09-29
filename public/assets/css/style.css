@@ -24199,6 +24199,8 @@ div.dtk-focus-alt table.dataTable tbody th.focus {
 .aut-bg-img .auth-content {
     padding: 70px 40px;
 }
-
+.text-primary2{
+    color: #2b489a !important;
+}
 /* image varient End */
 /**====== Authentication css end ======**/

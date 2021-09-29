@@ -108,7 +108,7 @@
                     <div class="col-md-5 mt-4 p-4 bg-light">
                         <h3 class="mt-4 mb-3">Aperçu google <i class="fa fa-google"></i></h3>
                         <div class="google-card">
-                            <div class="google-link"><small>www.jeune-investisseur.com/2/<span class="google-title">{% if news.id is null %}la-cryptomonaie{% else %}{{ news.metatitle }}{% endif %}</span></small></div>
+                            <div class="google-link"><small>www.cryptowithtincs.com/news/2/<span class="google-title">{% if news.id is null %}la-cryptomonaie{% else %}{{ news.metatitle }}{% endif %}</span></small></div>
                             <h4 class="google-title" style="color: #1a0dab;">{% if news.id is null %}La cryptomonaie{% else %}{{ news.metatitle }}{% endif %}</h4>
                             <div class="google-description" style="color: #5f6368;">
                                 {% if news.id is null %}
@@ -326,7 +326,7 @@
                         $('.google-description').text($(this).val());
                     });
                     $("#title").on('keyup', function (e) {
-                        var titleWithTiret = $(this).val().replaceAll(" ", "-").toLowerCase();
+                        var titleWithTiret = $(this).val().replaceAll(" ", "-").replaceAll("é", "e").replaceAll("'", "").replaceAll("/", "-").toLowerCase();
                         $('#metatitle').val(titleWithTiret);
                         $('.google-title').text(titleWithTiret);
                     })

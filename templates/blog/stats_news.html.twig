@@ -11,7 +11,7 @@
         <div class="card-deck">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="text-center"><span class="text-warning"><i class="fa fa-eye"></i><br> {{ news.views }} Vue{% if news.views > 1 %}s{% endif %}</span></h4>
+                    <h4 class="text-center"><span class="text-primary2"><i class="fa fa-eye"></i><br> {{ news.views }} Vue{% if news.views > 1 %}s{% endif %}</span></h4>
                     <div class="text-center">Nombre de vues total de cet article</div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="text-center"><span class="text-warning">{{ readPercentage | round }} %</span></h4>
+                    <h4 class="text-center"><span class="text-primary2">{{ readPercentage | round }} %</span></h4>
                     <div class="text-center">Pourcentage moyen de lecture</div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <tr>
                         <td><b><i class="fa fa-globe"></i>  {{ viewer.country }}</b></td>
                         <td>{{ viewer.views }} vue{% if viewer.views > 1 %}s{% endif %}</td>
-                        <td>Lecture moyenne: <span class="text-warning"><b>{{ viewer.readpercentage | round }}%</b></span></td>
+                        <td>Lecture moyenne: <span class="text-primary2"><b>{{ viewer.readpercentage | round }}%</b></span></td>
                         <td>Lecture moyenne: <span class="text-danger"><b>{{ viewer.duration | round }} minutes</b></span></td>
                     </tr>
                 {% else %}
