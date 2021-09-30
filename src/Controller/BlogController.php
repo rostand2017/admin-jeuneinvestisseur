@@ -169,7 +169,7 @@ class BlogController extends AbstractController
         $viewers = [];
         foreach($viewersCountries as $country){
             $statNews = $viewersRep->getDurationAndPercentage($news->getId(), $country['country']);
-            $views = count($viewersRep->findBy(['country'=>$country]));
+            $views = count($viewersRep->findBy(['country'=>$country, "news"=>$news->getId()]));
             array_push($viewers, ["country" => $country['country'], "views" => $views, "readpercentage" => $statNews['readpercentage'], "duration" => $statNews['duration']] );
         }
 
