@@ -16,6 +16,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $encoder): Response
     {
+		var_dump("Scheisse");
         if ($this->getUser()) {
              return $this->redirectToRoute('home_page');
         }
