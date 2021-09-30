@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1fab011-bf30-4815-8935-809d4f502549" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/.htaccess" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/BlogController.php" afterPath="$PROJECT_DIR$/src/Controller/BlogController.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BlogController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BlogController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="163" column="59" lean-forward="false" selection-start-line="163" selection-start-column="59" selection-end-line="163" selection-end-column="59" />
+            <state relative-caret-position="200">
+              <caret line="164" column="84" lean-forward="false" selection-start-line="164" selection-start-column="84" selection-end-line="164" selection-end-column="84" />
               <folding>
                 <element signature="e#595#1144#0#PHP" expanded="false" />
                 <element signature="e#1218#1507#0#PHP" expanded="false" />
@@ -43,7 +43,7 @@
                 <element signature="e#2475#5519#0#PHP" expanded="false" />
                 <element signature="e#5600#6089#0#PHP" expanded="false" />
                 <element signature="e#6095#6168#0#PHP" expanded="false" />
-                <element signature="e#7928#8718#0#PHP" expanded="false" />
+                <element signature="e#7948#8738#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -69,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/blog/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="26" column="114" lean-forward="false" selection-start-line="26" selection-start-column="108" selection-end-line="26" selection-end-column="114" />
+            <state relative-caret-position="66">
+              <caret line="17" column="26" lean-forward="false" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -115,8 +115,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>good</find>
-      <find>http://artf.github.io/grapesjs</find>
       <find>goods</find>
       <find>append</find>
       <find>select</find>
@@ -145,6 +143,8 @@
       <find>text-warning</find>
       <find>image</find>
       <find>images</find>
+      <find>154.72.150.181</find>
+      <find>$news-&gt;getDurationTotal() / $nbViewers</find>
     </findStrings>
     <replaceStrings>
       <replace>Emails</replace>
@@ -194,7 +194,6 @@
         <option value="$PROJECT_DIR$/public/assets/js/category.js" />
         <option value="$PROJECT_DIR$/src/Controller/CategoryController.php" />
         <option value="$PROJECT_DIR$/templates/home/category.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/BlogController.php" />
         <option value="$PROJECT_DIR$/templates/part/nav.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/News.php" />
         <option value="$PROJECT_DIR$/templates/blog/edit_news.html.twig" />
@@ -207,6 +206,7 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/config/services.yaml" />
         <option value="$PROJECT_DIR$/templates/blog/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/BlogController.php" />
       </list>
     </option>
   </component>
@@ -360,16 +360,6 @@
             <path>
               <item name="admin-jeuneinvestisseur" type="b2602c69:ProjectViewProjectNode" />
               <item name="admin-jeuneinvestisseur" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="admin-jeuneinvestisseur" type="b2602c69:ProjectViewProjectNode" />
-              <item name="admin-jeuneinvestisseur" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="admin-jeuneinvestisseur" type="b2602c69:ProjectViewProjectNode" />
-              <item name="admin-jeuneinvestisseur" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
@@ -428,7 +418,7 @@
       <workItem from="1611915380696" duration="37834000" />
       <workItem from="1632052707643" duration="12537000" />
       <workItem from="1632208351077" duration="58403000" />
-      <workItem from="1632911485471" duration="3051000" />
+      <workItem from="1632911485471" duration="4100000" />
     </task>
     <task id="LOCAL-00001" summary="Blog modules added">
       <created>1611412908654</created>
@@ -521,11 +511,18 @@
       <option name="project" value="LOCAL" />
       <updated>1632986376205</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add htaccess in public directory">
+      <created>1632986545709</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1632986545709</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157377000" />
+    <option name="totallyTimeSpent" value="158426000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
@@ -535,6 +532,7 @@
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -546,7 +544,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -569,7 +566,8 @@
     <MESSAGE value="Removing .env file as commit file" />
     <MESSAGE value="adding htaccess" />
     <MESSAGE value="correction of the url" />
-    <option name="LAST_COMMIT_MESSAGE" value="correction of the url" />
+    <MESSAGE value="add htaccess in public directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="add htaccess in public directory" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -782,6 +780,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="123" column="43" lean-forward="false" selection-start-line="123" selection-start-column="43" selection-end-line="123" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -864,22 +863,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="163" column="59" lean-forward="false" selection-start-line="163" selection-start-column="59" selection-end-line="163" selection-end-column="59" />
-          <folding>
-            <element signature="e#595#1144#0#PHP" expanded="false" />
-            <element signature="e#1218#1507#0#PHP" expanded="false" />
-            <element signature="e#1959#2407#0#PHP" expanded="false" />
-            <element signature="e#2475#5519#0#PHP" expanded="false" />
-            <element signature="e#5600#6089#0#PHP" expanded="false" />
-            <element signature="e#6095#6168#0#PHP" expanded="false" />
-            <element signature="e#7928#8718#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/assets/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="433">
@@ -937,9 +920,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/blog/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="26" column="114" lean-forward="false" selection-start-line="26" selection-start-column="108" selection-end-line="26" selection-end-column="114" />
+        <state relative-caret-position="66">
+          <caret line="17" column="26" lean-forward="false" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/BlogController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="164" column="84" lean-forward="false" selection-start-line="164" selection-start-column="84" selection-end-line="164" selection-end-column="84" />
+          <folding>
+            <element signature="e#595#1144#0#PHP" expanded="false" />
+            <element signature="e#1218#1507#0#PHP" expanded="false" />
+            <element signature="e#1959#2407#0#PHP" expanded="false" />
+            <element signature="e#2475#5519#0#PHP" expanded="false" />
+            <element signature="e#5600#6089#0#PHP" expanded="false" />
+            <element signature="e#6095#6168#0#PHP" expanded="false" />
+            <element signature="e#7948#8738#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

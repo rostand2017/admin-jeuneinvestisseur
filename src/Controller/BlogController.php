@@ -162,7 +162,7 @@ class BlogController extends AbstractController
 
         $viewersRep = $em->getRepository(Viewers::class);
         $nbViewers = count($viewersRep->findByNews($news));
-        $readMinuteAvg = $news->getDurationTotal() / $nbViewers;
+        $readMinuteAvg = $nbViewers >0 ? $news->getDurationTotal() / $nbViewers : 0;
         $readPercentage = $news->getReadDuration() > 0 ?$readMinuteAvg  * 100 / $news->getReadDuration() : 100;
 
         $viewersCountries = $viewersRep->getViewersCountries($news->getId());
