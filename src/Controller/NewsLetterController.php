@@ -47,15 +47,16 @@ class NewsLetterController extends AbstractController
             $emails = $em->getRepository(Emails::class)->findAll();
             if(!empty($emails)){
                 foreach ($emails as $email){
-                    // envoie des email
-                    $mes = (new \Swift_Message("Annonce Gestions ZEN"))
-                            ->setFrom('contact@gestionszen.com')
+                    if( preg_match("#.+@[a-zA-Z]+\.[a-zA-Z]{2,6}#", $email) ){
+                        $mes = (new \Swift_Message("Annonce CryptoWithTincs"))
+                            ->setFrom('contact@cryptowithtincs.com')
                             ->setTo($email->getEmail())
                             ->setBody(
                                 $message,
                                 "text/html"
                             );
-                    $mailer->send($mes);
+                        $mailer->send($mes);
+                    }
                 }
                 return new JsonResponse(array(
                     "status"=>0,
